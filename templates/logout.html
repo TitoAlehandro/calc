@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  {% if form.errors %}
+    <p class="error">Сожалеем, вы неправильно ввели логин или пароль</p>
+  {% endif %}
+	Вы вышли из аккаунта.
+{% endblock %}
