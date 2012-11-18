@@ -1,0 +1,148 @@
+.prod-inf { 
+    background: #FFFFFF;
+    padding-right: 20px; 
+   
+	float: left; /* Обтекание справа */
+    border: 1px solid #333; /* Параметры рамки вокруг */
+    padding: 5px; /* Поля вокруг текста */
+    margin: 10px 10px 20px 5px; /* Значения отступов */
+	border-radius:6px; 
+	-webkit-border-radius:6px; 
+	-moz-border-radius:5px; 
+	-khtml-border-radius:10px;
+}
+.prod-inf-lst { 
+    width: 140px; 
+	height: 180px;
+    background: #FFFFFF;
+    padding-right: 20px; 
+   
+	float: left; /* Обтекание справа */
+    border: 1px solid #333; /* Параметры рамки вокруг */
+    padding: 5px; /* Поля вокруг текста */
+    margin: 10px 10px 20px 5px; /* Значения отступов */
+	border-radius:6px; 
+	-webkit-border-radius:6px; 
+	-moz-border-radius:5px; 
+	-khtml-border-radius:10px;
+}
+
+/* IMG radius */
+
+.b-img-radius {
+	zoom: 1;
+	position: relative;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.b-img-radius img {
+    display: block;
+    visibility: hidden;
+}
+
+  body {
+      font-family: Arial, Helvetica, sans-serif; /* Рубленый шрифт текста */
+      margin: 0; /* Обнуляем отступы браузера */
+	  background-color: #DDDDDD;
+  }
+  h1 {
+      font-size: 36px; /* Размер шрифта */
+      font-weight: bold; /* Жирное начертание */
+      margin: 0; /* Убираем отступы */
+      color: #fc6; /* Цвет текста */
+  }
+  h2 {
+      margin-top: 0; /* Убираем отступ сверху */
+  }
+  #head { /* Верхний блок */
+      background: #0080c0; /* Цвет фона */
+      padding: 10px; /* Поля вокруг */
+  }
+  #menu { /* Левая колонка */
+      float: left; /* Обтекание справа */
+      border: 1px solid #333; /* Параметры рамки вокруг */
+      width: 200px; /* Ширина колонки */
+      padding: 5px; /* Поля вокруг текста */
+      margin: 10px 10px 20px 5px; /* Значения отступов */
+	  border-radius:6px; 
+	  -webkit-border-radius:6px; 
+	  -moz-border-radius:5px; 
+	  -khtml-border-radius:10px;
+  }
+  #menu div {
+      padding: 2px; /* Поля вокруг ссылок */
+  }
+  #menu a { 
+      display: block; /* Отображать ссылку как блок */
+      padding: 2px; /* Поля вокруг ссылок */
+      margin: 1px; /* Отступы вокруг */
+      font-size: 0.9em; /* Размер текста */
+      text-decoration: none; /* Убираем подчеркивание текста */
+	  border-radius:6px; 
+	  -webkit-border-radius:6px; 
+	  -moz-border-radius:5px; 
+	  -khtml-border-radius:10px;
+  }
+  #menu a:hover { 
+      background: #faf3d2; /* Цвет фона */
+      border: 1px dashed #634f36; /* Добавление пунктирной рамки */
+      margin: 0; /* Убираем поля */
+  }
+  #content { /* Правая колонка */
+      margin: 10px 5px -10px 225px; /* Значения отступов */
+      /*padding: 5px; /* Поля вокруг текста */
+      /*border: 1px solid #333; /* Параметры рамки */
+  }
+   #cont { /* Правая колонка */
+      margin: 10px 5px 20px 225px; /* Значения отступов */
+      padding: 5px; /* Поля вокруг текста */
+      border: 1px solid #333; /* Параметры рамки */
+  }
+  .line {
+      border-bottom: 1px groove #333; /* Линия между ссылками */
+  }
+  #foot { /* Нижний блок */
+      background: #333; /* Цвет фона */
+      padding: 5px; /* Поля вокруг текста */
+      color: #fff; /* Цвет текста */
+      clear: both; /* Отменяем обтекание */
+  }
+  
+/* ----------- */
+
+button {
+	height:85px;
+	background:#0084ff url(/media/images/button.png) no-repeat left top;
+	display:block;
+	float:left;
+	padding-left:20px;
+	cursor:pointer; /* В ие6 почему-то пропадает курсор с рукой, при этом кликабельность кнопки не теряется */
+}
+.button b {
+	height:85px;
+	background:url(/media/images/button.png) no-repeat right top;
+	display:block;
+	float:left;
+	padding-right:20px;
+	font-size:20px;
+}
+.blue_loop { 
+	#color: #FFFFFF;
+    width: 140px; 
+	height: 180px;
+    background: #FFFFFF;
+    #padding-right: 20px; 
+   
+	#float: left; /* Обтекание справа */
+    border: 1px solid #333; /* Параметры рамки вокруг */
+    padding: 5px; /* Поля вокруг текста */
+    margin: 10px 10px 20px 5px; /* Значения отступов */
+	#border-radius:6px; 
+	-webkit-border-radius:6px; 
+	-moz-border-radius:5px; 
+	-khtml-border-radius:10px;
+}

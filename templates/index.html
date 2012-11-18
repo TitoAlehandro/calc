@@ -1,6 +1,105 @@
 {% extends "base.html" %}
+	
+{% block content %}
+Приветствуем Вас, {{name}}. Ваш аккаунт создан {{date}}.
+<style type="text/css" media="screen">
+	div.combobox	*	{font-family: Tahoma;font-size: 12px}
+	div.combobox	{position: relative;}
+	div.combobox	div.dropdownlist	{display: none;width: 200px;border: solid 1px #000;
+		height: 200px;overflow: auto;position: absolute;background-color: #fff;top: 18px;left: 0px;}
+	div.combobox	.dropdownlist	a	{display: block;text-decoration: none;color: #000;padding: 1px}
+	div.combobox	.dropdownlist	a.light	{color: #fff;background-color: #007}
+	div.combobox	.dropdownlist, input {font-family: Tahoma;font-size: 12px;}
+	div.combobox	input {float: left;width: 182px;border: solid 1px #ccc;height: 15px}
+	div.combobox	span	{border: solid 1px #ccc;background: #eee;width: 16px;height: 17px;
+		float: left;text-align: center;border-left: none}
+</style>
 
-{% block all_title %}РБК Инструменты{% endblock %}
+<div>
+  <table border class="blue_loop">
 
-{% block main_block %}
+	<tr>	   
+	  <th>№</th>
+	  <th>Дата</th>
+	  <th>Отдел</th>
+	  <th>Наименование</th>
+	  <th>Место</th>
+	  <th>Цена</th>
+	  <th>X</th>	   
+	</tr>
+	
+	<tr>	   
+	  <form action="/book/add" enctype="multipart/form-data" method="post">
+		{% csrf_token %} 
+		<th>
+		  
+		</th>
+		<th>
+		  <input type="date" name="book_dt">
+		</th>
+		<th>
+		  <input name="br-menu" list="<br_lst>" autocomplete="off">
+		  <datalist id="<br_lst>">
+			{% for br in branchs %}
+			<OPTION name="book_br" value={{br.name}}>
+			  {% endfor %} 
+		  </datalist>
+		  <!-- <SELECT NAME="br-menu"> -->
+		  <!-- 	{% for br in branchs %} -->
+		  <!-- 	<OPTION name="book_br">{{br.name}} -->
+		  <!-- 	  {% endfor %}  			   -->
+		  <!-- </SELECT> -->
+		</th>
+		
+		<th>
+		  <input name="nm-menu" list="<nm_lst>" autocomplete="off">
+		  <datalist id="<nm_lst>">
+			{% for pr in products %}
+			<OPTION name="book_nm" value={{pr.name}}>
+			  {% endfor %} 
+		  </datalist>
+		</th>
+		<th>
+		  <input name="pl-menu" list="<pl_lst>" autocomplete="off">
+		  <datalist id="<pl_lst>">
+			{% for pl in places %}
+			<OPTION name="book_pl" value={{pl.name}}>
+			  {% endfor %} 
+		  </datalist>
+		</th>
+		<th><textarea name="book_pr" rows="1" cols="10"></textarea></th>
+
+		
+
+		<th><input type="submit" value="+"></th>
+	  </form>
+	</tr>	   
+	
+	
+	{% for row in rows %}
+	<tr>
+	  <form action="/book/del" enctype="multipart/form-data" method="post">
+		{% csrf_token %}
+
+		
+		<td>
+		  {{forloop.counter}}
+		  <textarea rows=1 cols=1 name="book_id" style="visibility:hidden">{{row.id}}</textarea>
+		</td>
+		<td>
+		  {{row.date}} 
+		</td>
+		<td>{{row.branch_id.name}}</td>
+		<td>{{row.product_id.name}}</td>
+		<td>{{row.place_id.name}}</td>	   
+		<td>{{row.price}}</td>	   
+		<th><input type="submit" value="X"></th>
+	  </form>
+	</tr>
+	{% endfor %}
+
+	
+  </table>
+  
+</div>
 {% endblock %}

@@ -1,25 +1,51 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
-	</head>
-	
-	<body>
-	  <div align="right">
-		<a href="/accounts/login/">
-		  войти
-		</a>
-		----
-		<a href="/accounts/logout/">
-		  выход
-		</a>
-	  </div>
-
-	  <div class="main-block">
-		{% block content %}{% endblock %}
-	  </div>
-		
-
-		
-	</body>
-</html>
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<link rel="stylesheet" href="/media/css/main.css"/>
+  </head>	
+  <body>
+	<div class="login-block">
+	  {% block login %}{% endblock %}
+	</div>
+	<table>
+	  <tr>
+		<td>
+		  <div align="lefit">
+			<a href="/">
+			  домой
+			</a>
+			
+		  </div>
+		</td>
+		<td>
+		  
+		<td>
+		<td>
+		  <div align="right">
+			
+			{% if user.is_active %}		  
+			<a href="/accounts/login/">
+			  {{user.firstname}}
+			</a>
+			{% else %}
+			<a href="/accounts/login/">			  
+			  гость
+			</a>
+			{% endif %}	
+			----
+			<a href="/accounts/logout/">
+			  выход
+			</a>
+		  </div>
+		</td>		  
+		</tr>
+		</table>
+		{% if user.is_active %}
+		<div class="main-block">
+		  {% block content %}{% endblock %}
+		</div>
+		{% endif %}	
+				
+	  </body>
+	</html>
