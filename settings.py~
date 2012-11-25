@@ -13,12 +13,6 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'CalculationBook'
-EMAIL_HOST_PASSWORD = 'c3Ocean_Dom'
-EMAIL_USE_TLS = True
-
 MANAGERS = ADMINS
 
 DATABASES = {
@@ -82,7 +76,6 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    current_path("media"),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

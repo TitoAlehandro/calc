@@ -4,11 +4,14 @@ from django.http import HttpResponseRedirect
 from django.template import loader
 from django.template.context import RequestContext
 from django.http import HttpResponse
-
+from calc.book.tr import *
+from models import *
+from django.contrib.auth.models import User
+from django.contrib.auth.views import login
+from django.core.mail import send_mail
 
 @login_required
 def profile(request):
-    
     template = loader.get_template("welcome.html")
     context = RequestContext(request, {
         "name": request.user.username,
@@ -16,3 +19,22 @@ def profile(request):
     })
     return HttpResponse(template.render(context))
     #return HttpResponseRedirect(request.user.get_absolute_url())
+def registrate(request):
+    template = loader.get_template("activate.html")
+    
+    user = User.objects.create_user(request.POST['username'], request.POST['username'], request.POST['reg_pass'])
+    user.save()
+    
+    request.user = user
+    #login(request)
+    
+    #return HttpResponseRedirect(request.user.get_absolute_url())
+
+    send_mail('Subject here', 'Here is the message.', 'from@example.com',
+    [request.POST['username']], fail_silently=False)
+
+    context = RequestContext(request, {
+        "name": user.username,
+        "date": user.date_joined,
+    })
+    return HttpResponse(template.render(context))

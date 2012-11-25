@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+
+{% block content %}
+ Приветствуем Вас, {{name}}. Ваш аккаунт создан {{date}}.
+{% endblock %}

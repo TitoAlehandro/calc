@@ -1,25 +1,90 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
-	</head>
-	
-	<body>
-	  <div align="right">
-		<a href="/accounts/login/">
-		  войти
-		</a>
-		----
-		<a href="/accounts/logout/">
-		  выход
-		</a>
-	  </div>
+  <head>
+	<title id="page_Title">Добро пожаловать на КальБук - заходите, регистрируйтесь и учитывайте свои расходы.</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<link rel="stylesheet" href="/media/css/main.css"/>
+  </head>	
+  <body>
+	<div class="login-block">
+	  {% block login %}
+	  <br>
+		<table class="login-table">
+		  <tr>
+			<td>
+			  <div align="rigth">
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="/">
+				  <font size=6>
+				  <b>
+				  CALBOOK
+				  </b>
+				  </font>
+				</a>
+				
+			  </div>
+			</td>
+			<td>
+			  <div align="right">
+				
+				{% if user.is_active %}		  
+				<a href="/accounts/login/">
+				  {{user.firstname}}
+				</a>
+				Приветствуем Вас, {{user.firstname}}<br>
+				<a href="/accounts/logout/">
+				  выход
+				</a>&nbsp;&nbsp;
+				{% else %}
+				<div class="email">
+				  <form action='/accounts/login/' method='post'>
+					{% csrf_token %}
+					<label for="username">Логин(e-mail):</label>
+					<input type="text" name="username" value="" id="username"></input>
+					<label for="password">Пароль:</label>
+					<input type="password" name="password" value="" id="password"></input><input type="submit" value="Войти" /></input>
+				  <input type="hidden" name="next" value="{{ next|escape }}" /></input>
+			  </form>		
+				
+			</div>		  	
+			{% endif %}	  		  
+		  </div>
+		</td>		  
+	  </tr>
+	</table>
+	{% endblock %}
+  </div>
 
-	  <div class="main-block">
-		{% block content %}{% endblock %}
-	  </div>
-		
 
-		
-	</body>
-</html>
+
+  {% if user.is_active %}
+  <div class="main-lock">
+	{% block content %}{% endblock %}
+  </div>
+  {% else %}
+ 
+	<table id="table-reg">
+	  <tr>
+		<td align="left" width="50%"></td>
+		<td align="right">
+	<div class="registrate">	  
+				
+	  <form action='/accounts/registrate/' method='post'>
+		{% csrf_token %}
+		<br> <br> <br> <br> <br>
+				  <label><b>Регистрация:</b></label><br><br>	  
+					  <label for="username">Логин(e-mail):</label>
+					  <input type="text" name="username" value="" id="username"></input><br><br>
+						  <label for="password">Пароль:</label>
+						  <input type="reg_pass" name="reg_pass" value="" id="reg_pass"></input><br><br>
+							  <input type="submit" value="Регистрация" class = "b-reg"/></input><br>
+							  <input type="hidden" name="next" value="{{ next|escape }}" /></input>
+						  </form>			
+
+						</div>
+</td>
+
+					  {% endif %}	
+
+					</body>
+				  </html>

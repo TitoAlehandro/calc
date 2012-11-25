@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<link rel="stylesheet" href="/media/css/main.css"/>
+  </head>	
+  <body>
+	<table>
+	  <tr>
+		<td>
+		  <div align="lefit">
+			<a href="/">
+			  домой
+			</a>
+			
+		  </div>
+		</td>
+		<td>
+		  
+		<td>
+		<td>
+		  <div align="right">
+			
+			{% if user %}		  
+			<a href="/accounts/login/">
+			  войти {{user}}
+			</a>
+			
+			{% else %}
+			<a href="/accounts/login/">
+			  123
+			</a>
+			{% endif %}
+			
+	
+			----
+			<a href="/accounts/logout/">
+			  выход
+			</a>
+		  </div>
+		</td>		  
+		</tr>
+		</table>
+		<div class="main-block">
+		  {% block content %}{% endblock %}
+		</div>
+		
+	  </body>
+	</html>
