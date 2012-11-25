@@ -4,9 +4,12 @@ from django.conf.urls.defaults import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 import settings
+<<<<<<< HEAD
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns 
 
 
+=======
+>>>>>>> aac6b884346dd56421712c0b014b825e17a5b894
 
 urlpatterns = patterns('',
                        # существующие шаблоны располагаются здесь...
@@ -15,9 +18,12 @@ urlpatterns = patterns('',
                        (r'^admin/', include(admin.site.urls)),
                        (r"^book/", include("book.urls")),
                        )  
+<<<<<<< HEAD
 
 urlpatterns += staticfiles_urlpatterns()
 
+=======
+>>>>>>> aac6b884346dd56421712c0b014b825e17a5b894
 if settings.DEBUG:
     # static files (images, css, javascript, etc.)
     urlpatterns += patterns('',

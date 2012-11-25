@@ -5,10 +5,13 @@ from django.template import loader
 from django.template.context import RequestContext
 from django.http import HttpResponse
 from calc.book.tr import *
+<<<<<<< HEAD
 from models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.views import login
 from django.core.mail import send_mail
+=======
+>>>>>>> aac6b884346dd56421712c0b014b825e17a5b894
 
 @login_required
 def profile(request):
