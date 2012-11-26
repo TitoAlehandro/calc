@@ -1,3 +1,0 @@
- (r"^book.add$", "book.views.add"),
- (r"^book.del$", "book.views.delrow"),
- )

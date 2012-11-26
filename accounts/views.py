@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 # Create your views here.
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
@@ -5,13 +8,10 @@ from django.template import loader
 from django.template.context import RequestContext
 from django.http import HttpResponse
 from calc.book.tr import *
-<<<<<<< HEAD
 from models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.views import login
 from django.core.mail import send_mail
-=======
->>>>>>> aac6b884346dd56421712c0b014b825e17a5b894
 
 @login_required
 def profile(request):
@@ -33,7 +33,7 @@ def registrate(request):
     
     #return HttpResponseRedirect(request.user.get_absolute_url())
 
-    send_mail('Subject here', 'Here is the message.', 'from@example.com',
+    send_mail('Активация аккаунта', 'Перейдите по ссылке http://www.calbook.tk/.', 'calculationbook@gmail.com',
     [request.POST['username']], fail_silently=False)
 
     context = RequestContext(request, {

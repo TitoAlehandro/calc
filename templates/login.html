@@ -1,27 +1,2 @@
 {% extends "base.html" %}
-{% block login %}
-{% if not user.is_active %}		  	 
-<form action='.' method='post'>
-  {% csrf_token %}
 
-<<<<<<< HEAD
-=======
-  <label for="username">Логин:</label>
-  <input type="text" name="username" value="" id="username">
-  <label for="password">Пароль:</label>
-  <input type="password" name="password" value="" id="password">
-
-  <input type="submit" value="login" />
-  <input type="hidden" name="next" value="{{ next|escape }}" />
-</form>
-{% endif %}		
-{% endblock %}
-
-{% block content %}
-
-{% if form.errors %}
-<p class="error">Сожалеем, вы неправильно ввели логин или пароль</p>
-{% endif %}
-
-{% endblock %}
->>>>>>> aac6b884346dd56421712c0b014b825e17a5b894
