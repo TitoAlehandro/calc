@@ -28,7 +28,7 @@ class Book(models.Model):
     #date = models.DateField(auto_now_add=True)
     date = models.DateField()
     branch_id = models.ForeignKey(Branch)
-    price = models.IntegerField()
+    price = models.FloatField()
     place_id = models.ForeignKey(Place)
     product_id = models.ForeignKey(Product)
     user_id = models.ForeignKey(User)

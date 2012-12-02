@@ -4,6 +4,25 @@
 	<title id="page_Title">Добро пожаловать на КальБук - заходите, регистрируйтесь и учитывайте свои расходы.</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
 	<link rel="stylesheet" href="/media/css/main.css"/>
+	<script type="text/javascript" src="/media/js/jquery.js"></script>
+	<script type="text/javascript" src="/media/js/jquery.maskedinput-1.3.js"></script>
+	<script type="text/javascript">
+	  jQuery(function($) {
+
+	  $.mask.definitions['~']='[+-]';
+	  $('#date').mask('99/99/9999');
+	  $('#phone').mask('(999) 999-9999');
+	  $('#phoneext').mask("(999) 999-9999? x99999");
+	  $("#tin").mask("99-9999999");
+	  $("#ssn").mask("999-99-9999");
+	  $("#product").mask("a*-999-a999");
+      $('#price').mask('999999.99');
+	  $("#eyescript").mask("~9.99 ~9.99 999");
+	  });</script> 
+	
+
+
+
   </head>	
   <body>
 	<div class="login-block">
@@ -31,12 +50,13 @@
 				<a href="/accounts/login/">
 				  {{user.firstname}}
 				</a>
-				Приветствуем Вас, {{user.firstname}}<br>
+				<b>Приветствуем Вас</b>, {{user.username}}<br>
 				<a href="/accounts/logout/">
 				  выход
 				</a>&nbsp;&nbsp;
 				{% else %}
 				<div class="email">
+				  <div align="left"> <b> Вход в систему </b> </div>
 				  <form action='/accounts/login/' method='post'>
 					{% csrf_token %}
 					<label for="username">Логин(e-mail):</label>
@@ -72,11 +92,12 @@
 	  <form action='/accounts/registrate/' method='post'>
 		{% csrf_token %}
 		<br> <br> <br> <br> <br>
-				  <label><b>Регистрация:</b></label><br><br>	  
-					  <label for="username">Логин(e-mail):</label>
+				  <label><b>Регистрация</b> <br><font size=3>нового пользователя:</font></label><br><br>	  
+											
+												 <label for="username"><font size=3>Логин(e-mail):</font></label>
 					  <input type="text" name="username" value="" id="username"></input><br><br>
-						  <label for="password">Пароль:</label>
-						  <input type="reg_pass" name="reg_pass" value="" id="reg_pass"></input><br><br>
+						  <label for="password"><font size=3>Пароль:</font></label>
+						  <input type="password" name="reg_pass" value="" id="reg_pass" autocomplete="off"></input><br><br>
 							  <input type="submit" value="Регистрация" class = "b-reg"/></input><br>
 							  <input type="hidden" name="next" value="{{ next|escape }}" /></input>
 						  </form>			

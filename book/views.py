@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from django.template import loader
 from django.template.context import RequestContext
 from django.http import HttpResponse,  HttpResponseRedirect
@@ -41,8 +43,17 @@ def index(request):
 def add(request):
     template = loader.get_template("index.html")
     
-    bk = Book()    
-    bk.price = request.POST['book_pr']
+    bk = Book()  
+    try:
+        bk.price = float(request.POST['book_pr'])
+    except:
+        template = loader.get_template("error.html")
+        context = RequestContext(request, {
+                "error" : "Неверно введена цена товара.\n Попробуйте ввести без пробелов.",
+                })
+        
+        return HttpResponse(template.render(context))
+        
     
     dt = request.POST['book_dt']
     if len(dt) > 6:
