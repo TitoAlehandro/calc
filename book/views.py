@@ -3,41 +3,17 @@
 from django.template import loader
 from django.template.context import RequestContext
 from django.http import HttpResponse,  HttpResponseRedirect
-from models import *
 from calc.book.tr import *
 import datetime
 from django.core.exceptions import ObjectDoesNotExist
+from forms import RegForm
+from django.shortcuts import render_to_response
+from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST 
 
-def index(request):
-    template = loader.get_template("index.html")
+#def index(request):
 
-    if request.user.is_active:
-
-        bk_lst = Book.objects.filter(user_id=request.user).order_by('-date') ;
-        pl_lst = Place.objects.all().order_by('name') ;
-        pr_lst = Product.objects.all().order_by('name') ;
-        br_lst = Branch.objects.all().order_by('name') ;
-
-    
-        context = RequestContext(request, {
-                "rows": bk_lst,
-                "branchs" : br_lst,
-                "places" : pl_lst,
-                "products" : pr_lst,
-                "user" : request.user.username,
-                
-                })
-        return HttpResponse(template.render(context))
-    else:
-        context = RequestContext(request, {
-                "rows": [],
-                "branchs" :[],
-                "places" : [],
-                "products" : [],
-                "user" : request.user.username,
-                
-                })
-        return HttpResponse(template.render(context))
 
 
 def add(request):
@@ -53,7 +29,7 @@ def add(request):
                 })
         
         return HttpResponse(template.render(context))
-        
+    
     
     dt = request.POST['book_dt']
     if len(dt) > 6:
@@ -104,7 +80,7 @@ def add(request):
             "products" : pr_lst,
             
             })
-  
+    
     return HttpResponse(template.render(context))
 
 

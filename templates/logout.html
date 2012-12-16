@@ -1,9 +1,17 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block about %}
 
-  {% if form.errors %}
-    <p class="error">Сожалеем, вы неправильно ввели логин или пароль</p>
-  {% endif %}
-	Вы вышли из аккаунта.
+{% if form.errors %}
+<p class="error">Сожалеем, вы неправильно ввели логин или пароль</p>
+{% endif %}
+<div align="center">
+	<br><br>
+	Вы вышли из <b>CALBOOK</b>.
+	<br><br>
+	Ждем Вас снова!
+	<br><br><br>
+
+ <img width="30%" height="30%" alt="Просмотреть" src="/media/images/0008-007-Selskoe-khozjajstvo-i-khimija.jpg"></a>
+</div>
 {% endblock %}

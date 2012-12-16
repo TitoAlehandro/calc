@@ -1,7 +1,34 @@
 {% extends "base.html" %}
+{% block registrate %}
 
-{% block content %}
 <br>
- Спасибо за регистрацию!
+{% if not user.is_active %}
+
+<div class="registrate" align="right">
+
+<label><b>Регистрация</b> <br><font size=3>нового пользователя:</font></label><br><br>						
+  
+  <form method="post" id="reg">{% csrf_token %}
+	{% if form.errors %}
+	<p style="color: red;">
+	  Ошибка {{ form.errors|pluralize }} 
+	</p>
+	{% endif %}
+	{{ form.as_ul }}
+	<input type="submit" value="Регистрация" class = "b-reg"/></input><br>
+  </form>							   
+
+
+<br><br><br> 
+<label><b>CALBOOK</b></label><font size=3> поможет Вам подсчитать Ваши расходы!<br>
+</font>
+<br>
+</div>
+{% endif %}
+
+{% if user.is_active %}
+Спасибо за регистрацию!
 Пройдите по ссылке в письме, которое мы Вам прислали.
+{% endif %}
+
 {% endblock %}

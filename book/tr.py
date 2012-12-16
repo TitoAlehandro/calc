@@ -12,3 +12,4 @@ def grep(obj,st):
 def prm(obj):
     for ob in dir(obj):
         print(str(ob))
+

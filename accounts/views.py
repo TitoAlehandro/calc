@@ -8,10 +8,18 @@ from django.template import loader
 from django.template.context import RequestContext
 from django.http import HttpResponse
 from calc.book.tr import *
+from calc.book.forms import RegForm
 from models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.views import login
 from django.core.mail import send_mail
+from django.http import Http404
+from django.core.exceptions import ValidationError
+
+
+from django.core.mail import send_mail
+
+from django.contrib.auth.views import login, logout
 
 @login_required
 def profile(request):
@@ -22,22 +30,52 @@ def profile(request):
     })
     return HttpResponse(template.render(context))
     #return HttpResponseRedirect(request.user.get_absolute_url())
+
 def registrate(request):
     template = loader.get_template("activate.html")
     
+    try:
+        tr()
+        send_mail('Активация аккаунта', 'Перейдите по ссылке http://www.calbook.tk/.', 'calculationbook@gmail.com',
+                  [request.POST.get('username')], fail_silently=False)
+
+    except:
+        template = loader.get_template("error.html")
+        context = RequestContext(request, {
+                "error" : "Неверный email.\n Попробуйте ввести снова.",
+                })
+        #raise ValidationError(u'%s is not an even number' % request.POST['username'])
+        #raise Http404("Wrong order")
+        return HttpResponse(template.render(context))
+
     user = User.objects.create_user(request.POST['username'], request.POST['username'], request.POST['reg_pass'])
-    user.save()
+    try:        
+        user.save()
+    except:
+        user.delete()
+        template = loader.get_template("error.html")
+        context = RequestContext(request, {
+                "error" : "Пользователь не создан.\n Попробуйте ввести снова.",
+                })
+        return HttpResponse(template.render(context))
+        
+    
     
     request.user = user
     #login(request)
     
     #return HttpResponseRedirect(request.user.get_absolute_url())
 
-    send_mail('Активация аккаунта', 'Перейдите по ссылке http://www.calbook.tk/.', 'calculationbook@gmail.com',
-    [request.POST['username']], fail_silently=False)
-
+  
     context = RequestContext(request, {
         "name": user.username,
         "date": user.date_joined,
     })
     return HttpResponse(template.render(context))
+
+    # {'template_name': 'logout.html'}
+    logout(request)
+    #return HttpResponse(template.render(context))
+    #return HttpResponseRedirect(request.user.get_absolute_url())
+
+

@@ -10,13 +10,15 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = patterns('',
                        # существующие шаблоны располагаются здесь...
-                       (r"^$", "book.views.index"),
+                       (r"^$", "views.index"),
+                       (r"^about/$", "views.about"),
                        (r"^accounts/", include("accounts.urls")),
                        (r'^admin/', include(admin.site.urls)),
                        (r"^book/", include("book.urls")),
                        )  
 
 urlpatterns += staticfiles_urlpatterns()
+
 
 if settings.DEBUG:
     # static files (images, css, javascript, etc.)

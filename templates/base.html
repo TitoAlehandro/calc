@@ -19,7 +19,45 @@
       $('#price').mask('999999.99');
 	  $("#eyescript").mask("~9.99 ~9.99 999");
 	  });</script> 
-	
+
+
+	<!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+      // Create the data table.
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Topping');
+      data.addColumn('number', 'Slices');
+      data.addRows([
+      ['Mushrooms', 3],
+      ['Onions', 1],
+      ['Olives', 1],
+      ['Zucchini', 1],
+      ['Pepperoni', 2]
+      ]);
+
+      // Set chart options
+      var options = {'title':'How Much Pizza I Ate Last Night',
+      'width':400,
+      'height':300};
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+      }
+    </script>
 
 
 
@@ -35,77 +73,95 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;
 				<a href="/">
 				  <font size=6>
-				  <b>
-				  CALBOOK
-				  </b>
+					<b>
+					  CALBOOK
+					</b>
 				  </font>
 				</a>
 				
 			  </div>
 			</td>
 			<td>
+			  <div align="left">			
+				<font size=3> <a href="/accounts/logout/">
+					Новости
+				</a></font>
+			  </div>  
+			</td>
+			<td>
+			  <div align="left">			
+				<font size=3> <a href="/accounts/logout/">
+					Статьи
+				</a></font>
+			  </div>  
+			</td>
+			<td>
+			  <div align="left">			
+				<font size=3> <a href="/accounts/logout/">
+					Блог
+				</a></font>
+			  </div>  
+			</td>
+			<td>
+			  <div align="left">			
+				<font size=3> <a href="/about">
+					О проекте
+				</a></font>
+			  </div>  
+			</td>
+			<td>
 			  <div align="right">
-				
 				{% if user.is_active %}		  
 				<a href="/accounts/login/">
 				  {{user.firstname}}
 				</a>
 				<b>Приветствуем Вас</b>, {{user.username}}<br>
-				<a href="/accounts/logout/">
-				  выход
-				</a>&nbsp;&nbsp;
-				{% else %}
-				<div class="email">
-				  <div align="left"> <b> Вход в систему </b> </div>
-				  <form action='/accounts/login/' method='post'>
-					{% csrf_token %}
-					<label for="username">Логин(e-mail):</label>
-					<input type="text" name="username" value="" id="username"></input>
-					<label for="password">Пароль:</label>
-					<input type="password" name="password" value="" id="password"></input><input type="submit" value="Войти" /></input>
-				  <input type="hidden" name="next" value="{{ next|escape }}" /></input>
-			  </form>		
-				
-			</div>		  	
-			{% endif %}	  		  
-		  </div>
+				  <a href="/accounts/logout/">
+					выход
+				  </a>&nbsp;&nbsp;
+				  {% else %}
+				  <div class="email">
+					<div align="left"> <b> Вход в систему </b> </div>
+					<form action='/accounts/login/' method='post' id="mailr">{% csrf_token %}
+					  <label for="username">Логин(e-mail):</label>
+					  <input type="text" name="username" value="" id="username"></input>
+					  <label for="password">Пароль:</label>
+					  <input type="password" name="password" value="" id="password"></input><input type="submit" value="Войти" /></input>
+					<input type="hidden" name="next" value="{{ next|escape }}" /></input>
+				</form>				
+			  </div>		  	
+			  {% endif %}	  		  
+			</div>
+			
+		  </td>		  
+		</tr>
+	  </table>
+	  {% endblock %}
+	</div>
+
+
+	{% if user.is_active %}
+	<table>
+	  <tr>
+		<td>
+		  {% block content %}{% endblock %}
 		</td>		  
 	  </tr>
-	</table>
-	{% endblock %}
-  </div>
-
-
-
-  {% if user.is_active %}
-  <div class="main-lock">
-	{% block content %}{% endblock %}
-  </div>
-  {% else %}
- 
-	<table id="table-reg">
+	</table>	   
+	{% else %}
+	<table>
 	  <tr>
-		<td align="left" width="50%"></td>
-		<td align="right">
-	<div class="registrate">	  
-				
-	  <form action='/accounts/registrate/' method='post'>
-		{% csrf_token %}
-		<br> <br> <br> <br> <br>
-				  <label><b>Регистрация</b> <br><font size=3>нового пользователя:</font></label><br><br>	  
-											
-												 <label for="username"><font size=3>Логин(e-mail):</font></label>
-					  <input type="text" name="username" value="" id="username"></input><br><br>
-						  <label for="password"><font size=3>Пароль:</font></label>
-						  <input type="password" name="reg_pass" value="" id="reg_pass" autocomplete="off"></input><br><br>
-							  <input type="submit" value="Регистрация" class = "b-reg"/></input><br>
-							  <input type="hidden" name="next" value="{{ next|escape }}" /></input>
-						  </form>			
+		<td style="width: 40%;"></td>
+		<td>
+		  {% block registrate %}{% endblock %}	
+		</td>		  
+	  </tr>
+	</table>	
+	
+	{% endif %}	
 
-						</div>
-</td>
+	{% block about %}
+    {% endblock %}
 
-					  {% endif %}	
-
-					</body>
-				  </html>
+  </body>
+</html>

@@ -28,8 +28,7 @@
 	</tr>
 	
 	<tr>	   
-	  <form action="/book/add" enctype="multipart/form-data" method="post">
-		{% csrf_token %} 
+	  <form action="/book/add" enctype="multipart/form-data" method="post" id="add_prd">{% csrf_token %} 
 		<th>
 		  
 		</th>
@@ -43,11 +42,6 @@
 			<OPTION name="book_br" value={{br.name}}>
 			  {% endfor %} 
 		  </datalist>
-		  <!-- <SELECT NAME="br-menu"> -->
-		  <!-- 	{% for br in branchs %} -->
-		  <!-- 	<OPTION name="book_br">{{br.name}} -->
-		  <!-- 	  {% endfor %}  			   -->
-		  <!-- </SELECT> -->
 		</th>
 		
 		<th>
@@ -74,10 +68,7 @@
 	
 	{% for row in rows %}
 	<tr>
-	  <form action="/book/del" enctype="multipart/form-data" method="post">
-		{% csrf_token %}
-
-		
+	  <form action="/book/del" enctype="multipart/form-data" method="post" id="del_prd">{% csrf_token %}		
 		<td>
 		  {{forloop.counter}}
 		  <textarea rows=1 cols=1 name="book_id" style="visibility:hidden">{{row.id}}</textarea>
@@ -96,6 +87,13 @@
 
 	
   </table>
+<br>
+  <div style="float: left; width:45%; height:16px; background-color:#;40699C">&nbsp;</div> <div style="float: none;">&nbsp;&nbsp;45% – HTML</div> 
+  <div style="float: left; width:35%; height:16px; background-color:#4F81BD;">&nbsp;</div><div style="float: none;">&nbsp;&nbsp;35% – сайты</div>
+  <div style="float: left; width:20%; height:16px; background-color:#AABAD7;">&nbsp;</div><div style="float: none;">&nbsp;&nbsp;20% – программы</div>
   
+<!--Div that will hold the pie chart-->
+    <div id="chart_div"></div>
+
 </div>
 {% endblock %}
