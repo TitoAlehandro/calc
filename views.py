@@ -11,10 +11,12 @@ from django.http import HttpResponse,  HttpResponseRedirect
 from calc.book.tr import *
 from django.core.mail import send_mail
 
+from calc.book.views import calc_stat
+
 def index(request):
 	if request.method == 'POST':
 		form = RegForm(request.POST)
-		tr()
+		
 		if form.is_valid():
 			template = loader.get_template("activate.html")
 
@@ -25,7 +27,7 @@ def index(request):
 			except:
 				template = loader.get_template("error.html")
 				context = RequestContext(request, {
-						"error" : "Неверный email.\n Попробуйте ввести снова.",
+						"error" : "Неизвестная ошибка.\n Мы уже работаем над этим. \n Попробуйте чуть позже.",
 						})
 		      #raise ValidationError(u'%s is not an even number' % request.POST['username'])
 		      #raise Http404("Wrong order")
@@ -52,12 +54,15 @@ def index(request):
 					return render_to_response('activate.html', 
 								  {'form': form}, 
 								  context_instance=RequestContext(request))
-	if not request.user.is_anonymous():                          
-		template = loader.get_template("index.html")
+	if not request.user.is_anonymous():            
+		template = loader.get_template("prods.html")
 		bk_lst = Book.objects.filter(user_id=request.user).order_by('-date') 
 		pl_lst = Place.objects.all().order_by('name') 
 		pr_lst = Product.objects.all().order_by('name') 
 		br_lst = Branch.objects.all().order_by('name') 
+
+		calc_stat(br_lst)
+
 
 
 		context = RequestContext(request, {

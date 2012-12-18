@@ -4,6 +4,9 @@ from django.template import loader
 from django.template.context import RequestContext
 from django.http import HttpResponse,  HttpResponseRedirect
 from calc.book.tr import *
+from calc.book.models import *
+from math import trunc
+
 import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from forms import RegForm
@@ -17,7 +20,7 @@ from django.views.decorators.http import require_POST
 
 
 def add(request):
-    template = loader.get_template("index.html")
+    template = loader.get_template("prods.html")
     
     bk = Book()  
     try:
@@ -66,10 +69,12 @@ def add(request):
     
     bk.save()
     
-    bk_lst = Book.objects.filter(user_id=request.user).order_by('-date') ;
-    pl_lst = Place.objects.all().order_by('name') ;
-    pr_lst = Product.objects.all().order_by('name') ;
-    br_lst = Branch.objects.all().order_by('name') ;
+    bk_lst = Book.objects.filter(user_id=request.user).order_by('-date')
+    pl_lst = Place.objects.all().order_by('name')
+    pr_lst = Product.objects.all().order_by('name')
+    br_lst = Branch.objects.all().order_by('name')
+
+    calc_stat(br_lst)
 
     
     
@@ -85,7 +90,7 @@ def add(request):
 
 
 def delrow(request):
-    template = loader.get_template("index.html")
+    template = loader.get_template("prods.html")
 
     # get row 
     id_ = request.POST['book_id']
@@ -99,6 +104,7 @@ def delrow(request):
     pr_lst = Product.objects.all().order_by('name') ;
     br_lst = Branch.objects.all().order_by('name') ;
 
+    calc_stat(br_lst)
     
     
     context = RequestContext(request, {
@@ -109,3 +115,14 @@ def delrow(request):
             
             })
     return HttpResponse(template.render(context))
+def calc_stat(branches):
+    pr_lst = Book.objects.all()
+    tot = 0
+    for pr in pr_lst: tot = tot + pr.price        
+    for br in branches:
+        br.stat = 0
+        for pr in pr_lst:
+            if pr.branch_id == br:
+                br.stat = br.stat + pr.price
+        br.stat=trunc((br.stat / tot)*100)
+
