@@ -121,8 +121,13 @@ def calc_stat(branches):
     for pr in pr_lst: tot = tot + pr.price        
     for br in branches:
         br.stat = 0
+        br.stat_money = 0
         for pr in pr_lst:
             if pr.branch_id == br:
                 br.stat = br.stat + pr.price
+        br.stat_money = br.stat
+        br.stat_currency = 'руб.'
         br.stat=trunc((br.stat / tot)*100)
+
+
 

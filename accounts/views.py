@@ -8,6 +8,9 @@ from django.template import loader
 from django.template.context import RequestContext
 from django.http import HttpResponse
 from calc.book.tr import *
+from calc.book.models import *
+from calc.book.views import calc_stat
+
 from calc.book.forms import RegForm
 from models import *
 from django.contrib.auth.models import User
@@ -23,12 +26,33 @@ from django.contrib.auth.views import login, logout
 
 @login_required
 def profile(request):
-    template = loader.get_template("welcome.html")
+    #template = loader.get_template("welcome.html")
+    template = loader.get_template("prods.html")
+
+    # get all list
+    bk_lst = Book.objects.filter(user_id=request.user).order_by('-date') ;
+    pl_lst = Place.objects.all().order_by('name') ;
+    pr_lst = Product.objects.all().order_by('name') ;
+    br_lst = Branch.objects.all().order_by('name') ;
+
+    calc_stat(br_lst)
+
+
     context = RequestContext(request, {
-        "name": request.user.username,
-        "date": request.user.date_joined,
-    })
+            "rows": bk_lst,
+            "branchs" : br_lst,
+            "places" : pl_lst,
+            "products" : pr_lst,
+
+            })
     return HttpResponse(template.render(context))
+
+
+    #context = RequestContext(request, {
+    #    "name": request.user.username,
+    #    "date": request.user.date_joined,
+    #})
+    #return HttpResponse(template.render(context))
     #return HttpResponseRedirect(request.user.get_absolute_url())
 
 def registrate(request):
