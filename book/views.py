@@ -73,9 +73,9 @@ def add(request):
     bk.save()
     
     bk_lst = Book.objects.filter(user_id=request.user).order_by('-date')
-    pl_lst = Place.objects.filter(user_id=id_user).order_by('name')
-    pr_lst = Product.objects.filter(user_id=id_user).order_by('name')
-    br_lst = Branch.objects.filter(user_id=id_user).order_by('name')
+    pl_lst = Place.objects.filter(user_id=request.user).order_by('name')
+    pr_lst = Product.objects.filter(user_id=request.user).order_by('name')
+    br_lst = Branch.objects.filter(user_id=request.user).order_by('name')
 
     br_lst = calc_stat(request.user)
     #calc_stat(br_lst)
@@ -104,9 +104,9 @@ def delrow(request):
 
     # get all list
     bk_lst = Book.objects.filter(user_id=request.user).order_by('-date') ;
-    pl_lst = Place.objects.filter(user_id=id_user).order_by('name') ;
-    pr_lst = Product.objects.filter(user_id=id_user).order_by('name') ;
-    br_lst = Branch.objects.filter(user_id=id_user).order_by('name') ;
+    pl_lst = Place.objects.filter(user_id=request.user).order_by('name') ;
+    pr_lst = Product.objects.filter(user_id=request.user).order_by('name') ;
+    br_lst = Branch.objects.filter(user_id=request.user).order_by('name') ;
 
     br_lst = calc_stat(request.user)
     
