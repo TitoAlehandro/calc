@@ -45,6 +45,7 @@ def add(request):
     except ObjectDoesNotExist:
         pl = Place()
         pl.name = request.POST['pl-menu']
+        pl.user_id = request.user
         pl.save()
 
     try:
@@ -52,6 +53,7 @@ def add(request):
     except ObjectDoesNotExist:
         pr = Product()
         pr.name = name=request.POST['nm-menu']
+        pr.user_id = request.user
         pr.save()
 
     try:
@@ -59,6 +61,7 @@ def add(request):
     except ObjectDoesNotExist:
         br = Branch()
         br.name = name=request.POST['br-menu']
+        br.user_id = request.user
         br.save()    
         
     bk.place_id = pl
@@ -70,11 +73,12 @@ def add(request):
     bk.save()
     
     bk_lst = Book.objects.filter(user_id=request.user).order_by('-date')
-    pl_lst = Place.objects.all().order_by('name')
-    pr_lst = Product.objects.all().order_by('name')
-    br_lst = Branch.objects.all().order_by('name')
+    pl_lst = Place.objects.filter(user_id=id_user).order_by('name')
+    pr_lst = Product.objects.filter(user_id=id_user).order_by('name')
+    br_lst = Branch.objects.filter(user_id=id_user).order_by('name')
 
-    calc_stat(br_lst)
+    br_lst = calc_stat(request.user)
+    #calc_stat(br_lst)
 
     
     
@@ -100,11 +104,11 @@ def delrow(request):
 
     # get all list
     bk_lst = Book.objects.filter(user_id=request.user).order_by('-date') ;
-    pl_lst = Place.objects.all().order_by('name') ;
-    pr_lst = Product.objects.all().order_by('name') ;
-    br_lst = Branch.objects.all().order_by('name') ;
+    pl_lst = Place.objects.filter(user_id=id_user).order_by('name') ;
+    pr_lst = Product.objects.filter(user_id=id_user).order_by('name') ;
+    br_lst = Branch.objects.filter(user_id=id_user).order_by('name') ;
 
-    calc_stat(br_lst)
+    br_lst = calc_stat(request.user)
     
     
     context = RequestContext(request, {
@@ -115,19 +119,24 @@ def delrow(request):
             
             })
     return HttpResponse(template.render(context))
-def calc_stat(branches):
-    pr_lst = Book.objects.all()
+def calc_stat(id_user):
+    bk_lst = Book.objects.filter(user_id=id_user).order_by('-date')
+    #pl_lst = Place.objects.filter(user_id=id_user).order_by('name')
+    pr_lst = Product.objects.filter(user_id=id_user).order_by('name')
+    br_lst = Branch.objects.filter(user_id=id_user).order_by('name')
+
     tot = 0
-    for pr in pr_lst: tot = tot + pr.price        
-    for br in branches:
+    for pr in bk_lst: tot = tot + pr.price
+    for br in br_lst:
         br.stat = 0
         br.stat_money = 0
-        for pr in pr_lst:
+        for pr in bk_lst:
             if pr.branch_id == br:
                 br.stat = br.stat + pr.price
         br.stat_money = br.stat
         br.stat_currency = 'руб.'
         br.stat=trunc((br.stat / tot)*100)
+    return br_lst
 
 
 

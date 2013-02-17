@@ -4,20 +4,24 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Branch(models.Model):
     name = models.CharField(max_length=30)
+    user_id = models.ForeignKey(User)
     def __unicode__(self):
         return unicode(self.name)
 
 class Place(models.Model):
     name = models.CharField(max_length=30)
+    user_id = models.ForeignKey(User)
     def __unicode__(self):
         return unicode(self.name)
 
 class Product(models.Model):
     name = models.CharField(max_length=30)
+    user_id = models.ForeignKey(User)
     def __unicode__(self):
         return unicode(self.name)
 
 class Balance(models.Model):
+    user_id = models.ForeignKey(User)
     cur_date = models.DateField(auto_now_add=True)
     calc_date = models.DateField()
     balance = models.FloatField()
@@ -34,4 +38,3 @@ class Book(models.Model):
     user_id = models.ForeignKey(User)
     def __unicode__(self):
         return unicode(self.date)
-

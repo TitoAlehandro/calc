@@ -30,12 +30,13 @@ def profile(request):
     template = loader.get_template("prods.html")
 
     # get all list
-    bk_lst = Book.objects.filter(user_id=request.user).order_by('-date') ;
-    pl_lst = Place.objects.all().order_by('name') ;
-    pr_lst = Product.objects.all().order_by('name') ;
-    br_lst = Branch.objects.all().order_by('name') ;
+    bk_lst = Book.objects.filter(user_id=request.user).order_by('-date')
+    pl_lst = Place.objects.filter(user_id=request.user).order_by('name')
+    pr_lst = Product.objects.filter(user_id=request.user).order_by('name')
+    br_lst = Branch.objects.filter(user_id=request.user).order_by('name')
 
-    calc_stat(br_lst)
+    br_lst = calc_stat(request.user)
+    #calc_stat(br_lst)
 
 
     context = RequestContext(request, {
