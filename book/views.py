@@ -127,19 +127,17 @@ def calc_stat(id_user):
 
     tot = 0
     for pr in bk_lst: tot = tot + pr.price
-    if tot == 0:
+    for br in br_lst:
+        br.stat = 0
+        br.stat_money = 0
+        for pr in bk_lst:
+            if pr.branch_id == br:
+                br.stat = br.stat + pr.price
         br.stat_money = br.stat
         br.stat_currency = 'руб.'
-        br.stat=100
-    else:
-        for br in br_lst:
-            br.stat = 0
-            br.stat_money = 0
-            for pr in bk_lst:
-                if pr.branch_id == br:
-                    br.stat = br.stat + pr.price
-            br.stat_money = br.stat
-            br.stat_currency = 'руб.'
+        if tot == 0:
+            br.stat=100
+        else:
             br.stat=trunc((br.stat / tot)*100)
     return br_lst
 
