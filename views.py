@@ -84,3 +84,21 @@ def about(request):
 			"tpanel_partn": "index",
 			})
 	return HttpResponse(template.render(context))
+def blog(request):
+    template = loader.get_template("blog.html")
+    context = RequestContext(request, {
+    "tpanel_partn": "index",
+    })
+    return HttpResponse(template.render(context))
+def articles(request):
+    template = loader.get_template("articles.html")
+    context = RequestContext(request, {
+    "tpanel_partn": "index",
+    })
+    return HttpResponse(template.render(context))
+def news(request):
+    template = loader.get_template("news.html")
+    context = RequestContext(request, {
+    "tpanel_partn": "index",
+    })
+    return HttpResponse(template.render(context))

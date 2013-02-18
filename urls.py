@@ -12,9 +12,13 @@ urlpatterns = patterns('',
                        # существующие шаблоны располагаются здесь...
                        (r"^$", "views.index"),
                        (r"^about/$", "views.about"),
+                       (r"^news/$", "views.news"),
+                       (r"^articles/$", "views.articles"),
+                       (r"^blog/$", "views.blog"),
                        (r"^accounts/", include("accounts.urls")),
                        (r'^admin/', include(admin.site.urls)),
                        (r"^book/", include("book.urls")),
+
                        )  
 
 urlpatterns += staticfiles_urlpatterns()
