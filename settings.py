@@ -1,5 +1,5 @@
 # Django settings for calc project.
-
+from djangobb_forum import *
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -114,6 +114,8 @@ MIDDLEWARE_CLASSES = (
     #'django.middleware.csrf.CsrfResponseMiddleware'
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'djangobb_forum.middleware.LastLoginMiddleware',
+    'djangobb_forum.middleware.UsersOnline',
 )
 
 ROOT_URLCONF = 'calc.urls'
@@ -134,7 +136,13 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'accounts',
     'book',
-    #'registration',
+    'djapian',
+    'haystack',
+    'pagination',
+    #'messages',
+    'django_authopenid',
+    'djangobb_forum',
+    'registration',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -164,3 +172,9 @@ LOGGING = {
     }
 }
 FORCE_SCRIPT_NAME = ""
+DJAPIAN_DATABASE_PATH = './djapian_spaces/'
+HAYSTACK_SITECONF = 'calc.djangobb_forum'
+HAYSTACK_SEARCH_ENGINE = 'simple'
+
+TEMPLATE_CONTEXT_PROCESSORS = ( 'djangobb_forum.context_processors.forum_settings',
+ 'django.core.context_processors.request','django.contrib.auth.context_processors.auth')

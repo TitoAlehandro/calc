@@ -22,7 +22,7 @@ from django.views.decorators.http import require_POST
 def add(request):
     template = loader.get_template("prods.html")
     
-    bk = Book()  
+    bk = Book()
     try:
         bk.price = float(request.POST['book_pr'])
     except:
@@ -98,7 +98,7 @@ def delrow(request):
 
     # get row 
     id_ = request.POST['book_id']
-    row = Book.objects.get(id=id_)   
+    row = Book.objects.get(id=id_)
     # delete row
     row.delete()
 
