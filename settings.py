@@ -116,6 +116,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'djangobb_forum.middleware.LastLoginMiddleware',
     'djangobb_forum.middleware.UsersOnline',
+    'pagination.middleware.PaginationMiddleware'
+
 )
 
 ROOT_URLCONF = 'calc.urls'
@@ -176,5 +178,9 @@ DJAPIAN_DATABASE_PATH = './djapian_spaces/'
 HAYSTACK_SITECONF = 'calc.djangobb_forum'
 HAYSTACK_SEARCH_ENGINE = 'simple'
 
-TEMPLATE_CONTEXT_PROCESSORS = ( 'djangobb_forum.context_processors.forum_settings',
- 'django.core.context_processors.request','django.contrib.auth.context_processors.auth')
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'djangobb_forum.context_processors.forum_settings',
+    'django.core.context_processors.request',
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.static'
+)
