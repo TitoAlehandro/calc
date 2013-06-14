@@ -38,3 +38,8 @@ class Book(models.Model):
     user_id = models.ForeignKey(User)
     def __unicode__(self):
         return unicode(self.date)
+class InfoNews(models.Model):
+    date = models.DateField()
+    inf = models.CharField(max_length=255)
+    def __unicode__(self):
+        return unicode(self.inf)

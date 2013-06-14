@@ -20,9 +20,12 @@ def articles(request):
     })
     return HttpResponse(template.render(context))
 def news(request):
+    news = InfoNews.objects.all().order_by('-date')
+
     template = loader.get_template("news.html")
     context = RequestContext(request, {
     "tpanel_partn": "index",
+    "news" : news
     })
     return HttpResponse(template.render(context))
 def blog(request):
