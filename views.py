@@ -48,43 +48,45 @@ def index(request):
         try:
             user = User.objects.get(username=form.data.get('email', None))
         except User.DoesNotExist:
-            template = loader.get_template("error.html")
-            context = RequestContext(request, {
-                "error" : "Пользователь с таким именем уже существует.\n Попробуйте другой.",
-                })
-            return HttpResponse(template.render(context))
+            if form.is_valid():
+                template = loader.get_template("activate.html")
+                try:
+                    send_mail('Активация аккаунта', 'Перейдите по ссылке http://www.calbook.tk/ и введите логин и пароль.', 'calculationbook@gmail.com',[form.data.get('email', None),])
+                except:
+                    template = loader.get_template("error.html")
+                    context = RequestContext(request, {
+                    "error" : "Неизвестная ошибка.\n Мы уже работаем над этим. \n Попробуйте чуть позже.",
+                    })
+                    return HttpResponse(template.render(context))
 
-        if form.is_valid():
-            template = loader.get_template("activate.html")
-            try:
-                send_mail('Активация аккаунта', 'Перейдите по ссылке http://www.calbook.tk/ и введите логин и пароль.', 'calculationbook@gmail.com',[form.data.get('email', None),])
-            except:
-                template = loader.get_template("error.html")
-                context = RequestContext(request, {
-                "error" : "Неизвестная ошибка.\n Мы уже работаем над этим. \n Попробуйте чуть позже.",
-                })
-                return HttpResponse(template.render(context))
+                try:
+                    user = User.objects.create_user(form.data.get('email', None), form.data.get('email', None), form.data.get('password', None))
+                    user.save()
+                    template = loader.get_template("error.html")
+                    context = RequestContext(request, {
+                        "error" : "Вам отправлено письмо с инструкцией по активации",
+                        })
+                    return HttpResponse(template.render(context))
+                except:
+                    user.delete()
+                    template = loader.get_template("error.html")
+                    context = RequestContext(request, {
+                    "error" : "Пользователь не создан.\n Попробуйте ввести снова.",
+                    })
+                    return HttpResponse(template.render(context))
+            else:
+                if not request.user.is_anonymous():
+                    if not request.user.is_active():
+                        form = RegForm()
+                        return render_to_response('activate.html',
+                                                  {'form': form},
+                                                  context_instance=RequestContext(request))
+        template = loader.get_template("error.html")
+        context = RequestContext(request, {
+            "error" : "Пользователь с таким именем уже существует.\n Попробуйте другой.",
+            })
+        return HttpResponse(template.render(context))
 
-            try:
-                user = User.objects.create_user(form.data.get('email', None), form.data.get('email', None), form.data.get('password', None))
-                user.save()
-            except:
-                user.delete()
-                template = loader.get_template("error.html")
-                context = RequestContext(request, {
-                "error" : "Пользователь не создан.\n Попробуйте ввести снова.",
-                })
-                return HttpResponse(template.render(context))
-
-
-
-        else:
-            if not request.user.is_anonymous():
-                if not request.user.is_active():
-                    form = RegForm()
-                    return render_to_response('activate.html',
-                                              {'form': form},
-                                              context_instance=RequestContext(request))
     if not request.user.is_anonymous():
         template = loader.get_template("prods.html")
         bk_lst = Book.objects.filter(user_id=request.user).order_by('-date')
